@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @geolocation.address %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @geolocation.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @geolocation.longitude %>
+</p>
+
+<p>
+  <strong>Borough:</strong>
+  <%= @geolocation.borough %>
+</p>
+
+<p>
+  <strong>Neighborhood:</strong>
+  <%= @geolocation.neighborhood %>
+</p>
+
+<p>
+  <strong>Created at:</strong>
+  <%= @geolocation.created_at %>
+</p>
+
+<p>
+  <strong>Updated at:</strong>
+  <%= @geolocation.updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_geolocation_path(@geolocation) %> |
+<%= link_to 'Back', geolocations_path %>
