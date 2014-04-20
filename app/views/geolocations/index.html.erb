@@ -1,39 +1,65 @@
-<h1>Listing geolocations</h1>
+<body background="<%= asset_path( '1.jpg' ) %>">
 
-<table>
-  <thead>
-    <tr>
-      <th>Address</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Borough</th>
-      <th>Neighborhood</th>
-      <th>Created at</th>
-      <th>Updated at</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="wrapper">
+  <div class="container">
 
-  <tbody>
-    <% @geolocations.each do |geolocation| %>
-      <tr>
-        <td><%= geolocation.address %></td>
-        <td><%= geolocation.latitude %></td>
-        <td><%= geolocation.longitude %></td>
-        <td><%= geolocation.borough %></td>
-        <td><%= geolocation.neighborhood %></td>
-        <td><%= geolocation.created_at %></td>
-        <td><%= geolocation.updated_at %></td>
-        <td><%= link_to 'Show', geolocation %></td>
-        <td><%= link_to 'Edit', edit_geolocation_path(geolocation) %></td>
-        <td><%= link_to 'Destroy', geolocation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="searchResults">
+      <% if params[:search].present? == true %>
 
-<br>
+        <% if @locations.present? %>
 
-<%= link_to 'New Geolocation', new_geolocation_path %>
+        <table>
+          <tr>
+            <th></th>
+            <th>Movie</th>
+            <th></th>
+            <th>Address</th>
+            <th></th>
+          </tr>
+
+          <% @locations.each do |location| %>
+            <tr>
+              <td></td>
+              <% film_title = location.scenes.pluck(:title)[0]%>
+              <td><%= link_to film_title, location %>,</td>
+              <td></td>
+              <td><%= location.address %></td>
+
+               <% if session[:user_id] %>
+               <td><%= link_to 'Edit', edit_geolocation_path( location) %></td>
+               <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+               <%= button_to 'Logout', logout_path, method: :delete %>
+               <% end %>
+             </tr>
+          <% end %>
+        </table>
+
+        <% else %>
+          <p>"There are no movie location near your location"</p>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="noresults">
+<!-- Map preview if no search given -->
+       <% if params[:search].present? == false %>
+            <div class="MovieData">
+            <div class="Poster">
+<!--               check if poster is available -->
+              <% if @movieAPIdata.poster == "http://images.rottentomatoescdn.com/images/redesign/poster_default.gif" %>
+                <b>Poster currently unavailable</b>
+              <% else %> 
+                <p><img src=<%= @movieAPIdata.poster %>></p>
+              <% end %>
+            </div>           
+            </div>
+            <div class="GeoDetails">
+                <b>Film:</b>
+                <%= @preview.scenes.pluck(:title)[0]%>
+                <br><b>Address:</b>
+                <%= @preview.address %>
+              <p><%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@preview.latitude}%2C#{@preview.longitude}" %></p>
+            </div>
+       <% end %>
+    </div>
+  </div>
+</div>

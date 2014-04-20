@@ -1,39 +1,58 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<p>
-  <strong>Address:</strong>
-  <%= @geolocation.address %>
-</p>
+  <div class="MovieSelected">
+    <h1>
+      <p><%= @location.scenes.pluck(:title)[0]%></p>
+    </h1>
+  </div>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @geolocation.latitude %>
-</p>
+  <div class="MovieData">
+    <div class="Poster">
+<!--               check if poster is available -->
+      <% if @movieAPIdata.poster == "http://images.rottentomatoescdn.com/images/redesign/poster_default.gif" %>
+        <b>Poster currently unavailable</b>
+      <% else %> 
+        <p><img src=<%= @movieAPIdata.poster %>></p>
+      <% end %>
+    </div>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @geolocation.longitude %>
-</p>
+    <div class="MovieDetails">
+      <br><strong>Film Rating:</strong>   <%= @movieAPIdata.rating %><br>
+      <br><strong>Year Released:</strong> <%= @movieAPIdata.year %><br>
+      <br><strong>Year Runtime:</strong> <%= @movieAPIdata.runtime %> minutes<br>
+      <p><%= @movieAPIdata.synopsis %></p>
+      <br><br>
+       <!-- <i> User Input and filter results go here</i> -->
+      <br><br>
+<!--       <p>Movie Director will go here</p>
+      <p>Movie Rating will go here</p> -->
+      <p><a href=<%= @movieAPIdata.rt_link %>>Visit the Rotten Tomatoes Page</a></p>
+    </div>
+  </div>
 
-<p>
-  <strong>Borough:</strong>
-  <%= @geolocation.borough %>
-</p>
+  <div class="GeoDetails">
+      <p><b>Address:</b>
+      <%= @location.address %></p>
+    <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
 
-<p>
-  <strong>Neighborhood:</strong>
-  <%= @geolocation.neighborhood %>
-</p>
+        <% total = 0 %>
+        <% @location.nearbys(0.25).each do |location| %>
+          <% total += 1 %>
+        <% end %>
 
-<p>
-  <strong>Created at:</strong>
-  <%= @geolocation.created_at %>
-</p>
+        <% if total.to_i != 0  %>
+          <p><h3>Nearby locations within walking distance</h3></p>
+        <% end %>
 
-<p>
-  <strong>Updated at:</strong>
-  <%= @geolocation.updated_at %>
-</p>
+        <ul>
+        <% @location.nearbys(0.25).each do |location| %>
+        <li><strong><%=location.scenes.pluck(:title)[0]%></strong><br>
+          <%= link_to location.address, geolocation_path(location) %> (<%= location.distance.round(2) %> miles)</li>
 
-<%= link_to 'Edit', edit_geolocation_path(@geolocation) %> |
-<%= link_to 'Back', geolocations_path %>
+
+    <% end %>
+    </ul>
+  </div>
+
+
+</div>
