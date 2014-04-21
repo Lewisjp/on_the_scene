@@ -1,13 +1,9 @@
-<body background="<%= asset_path( '1.jpg' ) %>">
-
 <div class="wrapper">
   <div class="container">
 
-    <div class="searchResults">
+    <div class="row">
       <% if params[:search].present? == true %>
-
         <% if @locations.present? %>
-
         <table>
           <tr>
             <th></th>
@@ -34,22 +30,26 @@
         <% end %>
       <% end %>
     </div>
-    <div class="noresults">
+    <div class="row">
 <!-- Map preview if no search given -->
        <% if params[:search].present? == false %>
-            <div class="MovieData">
-            <div class="Poster">
+            <div class="col-md-4 col-md-offset-2" id="poster">
 <!--               check if poster is available -->
               <% if @movieAPIdata.poster == "http://images.rottentomatoescdn.com/images/redesign/poster_default.gif" %>
                 <b>Poster currently unavailable</b>
               <% else %> 
-                <p><img src=<%= @movieAPIdata.poster %>></p>
-              <% end %>
-            </div>           
+                <p>
+                  <a href="http://on-the-scene.herokuapp.com/geolocations/<%= @preview.id %>">
+                    <img src=<%= @movieAPIdata.poster %>>
+                  </a>
+                </p>
+              <% end %>           
             </div>
             <div class="GeoDetails">
                 <b>Film:</b>
+                <a href="http://on-the-scene.herokuapp.com/geolocations/<%= @preview.id %>">
                 <%= @preview.scenes.pluck(:title)[0]%>
+                </a>
                 <br><b>Address:</b>
                 <%= @preview.address %>
               <p><%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@preview.latitude}%2C#{@preview.longitude}" %></p>

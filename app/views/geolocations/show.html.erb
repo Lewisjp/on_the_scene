@@ -6,8 +6,8 @@
     </h1>
   </div>
 
-  <div class="MovieData">
-    <div class="Poster">
+  <div class="row">
+    <div class="col-md-4" id="poster">
 <!--               check if poster is available -->
       <% if @movieAPIdata.poster == "http://images.rottentomatoescdn.com/images/redesign/poster_default.gif" %>
         <b>Poster currently unavailable</b>
@@ -16,43 +16,48 @@
       <% end %>
     </div>
 
-    <div class="MovieDetails">
+    <div class="col-md-8">
       <br><strong>Film Rating:</strong>   <%= @movieAPIdata.rating %><br>
       <br><strong>Year Released:</strong> <%= @movieAPIdata.year %><br>
-      <br><strong>Year Runtime:</strong> <%= @movieAPIdata.runtime %> minutes<br>
+      <br><strong>Year Runtime:</strong> <%= @movieAPIdata.runtime %> minutes<br><br>
       <p><%= @movieAPIdata.synopsis %></p>
       <br><br>
-       <!-- <i> User Input and filter results go here</i> -->
-      <br><br>
-<!--       <p>Movie Director will go here</p>
-      <p>Movie Rating will go here</p> -->
-      <p><a href=<%= @movieAPIdata.rt_link %>>Visit the Rotten Tomatoes Page</a></p>
+<!--       <p><a href=<%= @movieAPIdata.rt_link %>>Visit the Rotten Tomatoes Page</a></p><br> -->
+
+
+<!--   Share Via Twitter -->
+      <a href="https://twitter.com/share" class="twitter-share-button" data-text="#OnTheScene found where <%= @location.scenes.pluck(:title)[0]%> was filmed!" data-url="http://on-the-scene.herokuapp.com/geolocations/<%= @location.id %>" data-size="large">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
   </div>
 
-  <div class="GeoDetails">
+  <div class="row">
+    <div class="col-md-5">
       <p><b>Address:</b>
       <%= @location.address %></p>
-    <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+      <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+    </div>
+    <div class="col-md-7">
+          <% total = 0 %>
+          <% @location.nearbys(0.25).each do |location| %>
+            <% total += 1 %>
+          <% end %>
 
-        <% total = 0 %>
-        <% @location.nearbys(0.25).each do |location| %>
-          <% total += 1 %>
-        <% end %>
+          <% if total.to_i != 0  %>
+            <p><h3>Nearby locations within walking distance</h3></p>
+          <% end %>
 
-        <% if total.to_i != 0  %>
-          <p><h3>Nearby locations within walking distance</h3></p>
-        <% end %>
-
-        <ul>
-        <% @location.nearbys(0.25).each do |location| %>
-        <li><strong><%=location.scenes.pluck(:title)[0]%></strong><br>
-          <%= link_to location.address, geolocation_path(location) %> (<%= location.distance.round(2) %> miles)</li>
+          <ul>
+          <% @location.nearbys(0.25).each do |location| %>
+          <li><strong><%=location.scenes.pluck(:title)[0]%></strong><br>
+            <%= link_to location.address, geolocation_path(location) %> (<%= location.distance.round(2) %> miles)</li>
 
 
-    <% end %>
-    </ul>
+      <% end %>
+      </ul>
+    </div>
   </div>
+
 
 
 </div>
