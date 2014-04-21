@@ -1,4 +1,4 @@
-#{On the Scene}[http://on-the-scene.herokuapp.com/about]
+{On the Scene}[http://on-the-scene.herokuapp.com/about]
 
 The dataset for this website was made available by NYC Open Data, and is based on the book "Scenes from the City: Filmmaking in New York, 1966 - 2006." edited by James Sanders and produced with the NYC Mayor's Office of Film, Theatre and Broadcasting.
 
