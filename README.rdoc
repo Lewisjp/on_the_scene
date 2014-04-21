@@ -1,28 +1,5 @@
-== README
+#{On the Scene}[http://on-the-scene.herokuapp.com/about]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The dataset for this website was made available by NYC Open Data, and is based on the book "Scenes from the City: Filmmaking in New York, 1966 - 2006." edited by James Sanders and produced with the NYC Mayor's Office of Film, Theatre and Broadcasting.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Movie details for film profiles were gathered using the Rotten Tomatoes API.
