@@ -5,7 +5,8 @@ class GeolocationsController < ApplicationController
   # GET /geolocations.json
   def index
     if params[:search].present?
-      @locations = Geolocation.near(params[:search], 0.50, :order => :distance )
+      # When using Postgres along with the Geocoder gem, your queries cannot use symbolized keys, for example :distance
+      @locations = Geolocation.near(params[:search], 0.50, :order => 'distance' )
     else
       @locations = Geolocation.limit(5)
     end
