@@ -1,5 +1,5 @@
 class GeolocationsController < ApplicationController
-  before_action :set_geolocation, only: [:show, :edit, :update, :destroy]
+  # before_action :set_geolocation, only: [:show, :edit, :update, :destroy]
 
   # GET /geolocations
   # GET /geolocations.json
@@ -19,7 +19,8 @@ class GeolocationsController < ApplicationController
   # GET /geolocations/1
   # GET /geolocations/1.json
   def show
-    set_geolocation()
+    # set_geolocation()
+    @location = Geolocation.find(params[:id]) 
     # Use pluck as a shortcut to select one or more attributes without loading a bunch of records just to grab the attributes you want.
     @movieAPIdata = Api.new(@location.scenes.pluck(:title))
   end
@@ -31,7 +32,8 @@ class GeolocationsController < ApplicationController
 
   # GET /geolocations/1/edit
   def edit
-    set_geolocation()
+    # set_geolocation()
+    @location = Geolocation.find(params[:id]) 
   end
 
   # POST /geolocations
@@ -57,7 +59,8 @@ class GeolocationsController < ApplicationController
   # PATCH/PUT /geolocations/1
   # PATCH/PUT /geolocations/1.json
   def update
-    set_geolocation()
+    # set_geolocation()
+    @location = Geolocation.find(params[:id]) 
 
     respond_to do |format|
       if @location.update_attribute(params[:geolocation])
@@ -83,14 +86,14 @@ class GeolocationsController < ApplicationController
   end
 
 
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_geolocation
-    @locations = Geolocation.find(params[:id]) 
-  end
+  # private
+  # # Use callbacks to share common setup or constraints between actions.
+  # def set_geolocation
+  #   @location = Geolocation.find(params[:id]) 
+  # end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def geolocation_params
-    params.require(:geolocation).permit(:address, :latitude, :longitude, :borough, :neighborhood, :created_at, :updated_at)
-  end
+  # # Never trust parameters from the scary internet, only allow the white list through.
+  # def geolocation_params
+  #   params.require(:geolocation).permit(:address, :latitude, :longitude, :borough, :neighborhood, :created_at, :updated_at)
+  # end
 end

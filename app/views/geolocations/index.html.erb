@@ -25,11 +25,6 @@
               <td></td>
               <td><%= location.address %></td>
 
-               <% if session[:user_id] %>
-               <td><%= link_to 'Edit', edit_geolocation_path( location) %></td>
-               <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-               <%= button_to 'Logout', logout_path, method: :delete %>
-               <% end %>
              </tr>
           <% end %>
         </table>
