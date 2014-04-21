@@ -81,16 +81,16 @@ class GeolocationsController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_geolocation
-      @location = Geolocation.find(params[:id]) 
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_geolocation
+    @locations = Geolocation.find(params[:id]) 
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def geolocation_params
-      params.require(:geolocation).permit(:address, :latitude, :longitude, :borough, :neighborhood, :created_at, :updated_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def geolocation_params
+    params.require(:geolocation).permit(:address, :latitude, :longitude, :borough, :neighborhood, :created_at, :updated_at)
+  end
 end

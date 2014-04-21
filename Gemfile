@@ -6,6 +6,13 @@ gem 'rails', '4.0.2'
 # For looking up addresses
 gem 'geocoder'
 
+# Proper upgrade to Rails4
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
+
 # For securing API Keys
 gem 'figaro'
 
