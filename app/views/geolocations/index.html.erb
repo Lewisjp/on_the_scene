@@ -52,7 +52,10 @@
                 </a>
                 <br><b>Address:</b>
                 <%= @preview.address %>
-              <p><%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@preview.latitude}%2C#{@preview.longitude}" %></p>
+
+                <%= render 'map' %>
+
+
             </div>
        <% end %>
     </div>

@@ -16,7 +16,7 @@ class GeolocationsController < ApplicationController
     # if the index returns false for search, it will display a random title
     @preview = Geolocation.find(rand(208))
     @movieAPIdata = Api.new(@preview.scenes.pluck(:title))
-
+    @MAP = ENV['SECRET_GLOBE']
   end
 
   # GET /geolocations/1
@@ -24,6 +24,7 @@ class GeolocationsController < ApplicationController
   def show
     # Use pluck as a shortcut to select one or more attributes without loading a bunch of records just to grab the attributes you want.
     @movieAPIdata = Api.new(@location.scenes.pluck(:title))
+    @MAP = ENV['SECRET_GLOBE']
   end
 
   # GET /geolocations/new
